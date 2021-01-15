@@ -1,4 +1,9 @@
-data
+data/Include
+data/Lib
+data/Scripts
+data/pyvenv.cfg
+data/result
+data/APs
 .idea
 venv
 Lib
