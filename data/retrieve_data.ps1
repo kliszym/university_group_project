@@ -6,7 +6,7 @@ mkdir APs
 mkdir result
 #prepare environment
 python3 -m venv .
-..\Scripts\activate
+.\Scripts\activate
 pip install -r requirements.txt
 #run scripts
 python sort_by_ap.py

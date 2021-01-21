@@ -1,2 +1,6 @@
-keras
 tensorflow
+keras
+pandas
+numpy
+matplotlib
+seaborn
