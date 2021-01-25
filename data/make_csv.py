@@ -1,6 +1,6 @@
 import json
 
-from data.retrieve_distance import get_distance
+from retrieve_distance import get_distance
 
 data_directory = "APs"
 result_file = "result/data.csv"

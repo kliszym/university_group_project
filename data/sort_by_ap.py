@@ -1,8 +1,8 @@
 import json
 import os
 
-from data.ap_ids import APs,get_ap_id
-from data.timestamp_checker import check_unique_time
+from ap_ids import APs, get_ap_id
+from timestamp_checker import check_unique_time
 
 data_directory = "raw"
 result_directory = "APs"
