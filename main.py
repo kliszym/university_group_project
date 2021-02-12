@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from math import sqrt
 from TestsCallback import TestCallback
 from sklearn.model_selection import RepeatedKFold
+from sklearn.preprocessing import MinMaxScaler
 
 
 def get_model(n_inputs, n_outputs):
@@ -41,9 +42,18 @@ x_train, y_train = get_data(train_data_file_path)
 x_val, y_val = get_data(validation_data_file_path)
 x_tests, y_tests = get_data(tests_data_file_path)
 
+
+# scaler = MinMaxScaler()
+# dataset = np.concatenate((x_train, x_val, x_tests))
+# scaler.fit(dataset)
+# x_train = scaler.transform(x_train)
+# x_val = scaler.transform(x_val)
+# x_tests = scaler.transform(x_tests)
+
+
 n_inputs, n_outputs = x_train.shape[1], y_train.shape[1]
 model = get_model(n_inputs, n_outputs)
-history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=200000,
+history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=500,
                     callbacks=TestCallback((x_tests, y_tests)))
 
 yhat = model.predict(x_tests)
