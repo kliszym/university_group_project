@@ -7,6 +7,7 @@ from keras.layers import Dense
 import pandas as pd
 import matplotlib.pyplot as plt
 from math import sqrt
+from TestsCallback import TestCallback
 from sklearn.model_selection import RepeatedKFold
 
 
@@ -42,7 +43,8 @@ x_tests, y_tests = get_data(tests_data_file_path)
 
 n_inputs, n_outputs = x_train.shape[1], y_train.shape[1]
 model = get_model(n_inputs, n_outputs)
-history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=500)
+history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=200000,
+                    callbacks=TestCallback((x_tests, y_tests)))
 
 yhat = model.predict(x_tests)
 
@@ -55,7 +57,7 @@ plt.plot(history.history['mean_absolute_error'][10:])
 plt.plot(history.history['val_mean_absolute_error'][10:])
 plt.xlabel("epoch")
 plt.ylabel("error [m]")
-plt.legend(["MEA", "validation MEA"])
+plt.legend(["MAE", "validation MEA"])
 plt.show()
 
 plt.plot(error)
