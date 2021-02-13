@@ -22,8 +22,8 @@ def get_model(n_inputs, n_outputs):
 
 def get_data(data_file_path):
     data_set = pd.read_csv(data_file_path)
-    x = data_set.iloc[:, :-2].values
-    y = data_set.iloc[:, -2:].values
+    x = data_set.iloc[:, :-3].values
+    y = data_set.iloc[:, -3:].values
 
     x = x[:, 1:]
     x = x[:, :-1]
@@ -43,25 +43,29 @@ x_val, y_val = get_data(validation_data_file_path)
 x_tests, y_tests = get_data(tests_data_file_path)
 
 
-# scaler = MinMaxScaler()
-# dataset = np.concatenate((x_train, x_val, x_tests))
-# scaler.fit(dataset)
-# x_train = scaler.transform(x_train)
-# x_val = scaler.transform(x_val)
-# x_tests = scaler.transform(x_tests)
+scaler = MinMaxScaler()
+dataset = np.concatenate((x_train, x_val, x_tests))
+scaler.fit(dataset)
+x_train = scaler.transform(x_train)
+x_val = scaler.transform(x_val)
+x_tests = scaler.transform(x_tests)
 
 
 n_inputs, n_outputs = x_train.shape[1], y_train.shape[1]
 model = get_model(n_inputs, n_outputs)
-history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=500,
+history = model.fit(x_train, y_train, validation_data=(x_val, y_val), verbose=1, epochs=1000,
                     callbacks=TestCallback((x_tests, y_tests)))
 
 yhat = model.predict(x_tests)
 
+print(yhat)
+
 error = []
 for predicted_data in zip(yhat, y_tests):
-    error.append(sqrt(((predicted_data[0][0] - predicted_data[1][0]) * (predicted_data[0][0] - predicted_data[1][0])) +
-                 ((predicted_data[0][1] - predicted_data[1][1]) * (predicted_data[0][1] - predicted_data[1][1]))))
+    error.append(
+        abs(predicted_data[0][0] - predicted_data[1][0]) +
+        abs(predicted_data[0][1] - predicted_data[1][1]) +
+        abs(predicted_data[0][2] - predicted_data[1][2]))
 
 plt.plot(history.history['mean_absolute_error'][10:])
 plt.plot(history.history['val_mean_absolute_error'][10:])

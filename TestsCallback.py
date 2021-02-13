@@ -15,8 +15,9 @@ class TestCallback(Callback):
         error = []
         for predicted_data in zip(result, y):
             error.append(
-                sqrt(((predicted_data[0][0] - predicted_data[1][0]) * (predicted_data[0][0] - predicted_data[1][0])) +
-                     ((predicted_data[0][1] - predicted_data[1][1]) * (predicted_data[0][1] - predicted_data[1][1]))))
+                abs(predicted_data[0][0] - predicted_data[1][0]) +
+                abs(predicted_data[0][1] - predicted_data[1][1]) +
+                abs(predicted_data[0][2] - predicted_data[1][2]))
 
         mea = sum(error)/len(error)
         self.history["mea"].append(mea)
