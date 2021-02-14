@@ -6,7 +6,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 import pandas as pd
 import matplotlib.pyplot as plt
-from math import sqrt
+from math import sqrt, pow
 from TestsCallback import TestCallback
 from sklearn.model_selection import RepeatedKFold
 from sklearn.preprocessing import MinMaxScaler
@@ -62,10 +62,10 @@ print(yhat)
 
 error = []
 for predicted_data in zip(yhat, y_tests):
-    error.append(
+    error.append((
         abs(predicted_data[0][0] - predicted_data[1][0]) +
         abs(predicted_data[0][1] - predicted_data[1][1]) +
-        abs(predicted_data[0][2] - predicted_data[1][2]))
+        abs(predicted_data[0][2] - predicted_data[1][2]))/3)
 
 plt.plot(history.history['mean_absolute_error'][10:])
 plt.plot(history.history['val_mean_absolute_error'][10:])
